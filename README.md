@@ -1,20 +1,17 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# PEI Full Stack - Baufest Tennis App
+![Logo](https://images.unsplash.com/photo-1595057602304-8b54f16dc1b0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80)
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## FAQ
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+#### ¿Donde encuentro la posta de la posta?
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Posiblemente [acá.](https://baufest.gitbook.io/baufest-pei/)
+
+#### ¿De verdad me estas diciendo qué en ese link encuentro la posta?
+
+¿Vos pensas que te voy a mentir?. Andá a hacer click allá arriba.
+
+## Author
+
+![badge](https://img.shields.io/static/v1.svg?style=flat-square&label=Señor%20X&message=Sr.%20Fullstack%20Developer&labelColor=1A1A1A&color=999999&logo=hackaday)
