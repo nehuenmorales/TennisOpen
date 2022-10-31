@@ -9,6 +9,7 @@ const TableBody = (data) => {
                 <td>{itemRow.id}</td>
                 <td>{itemRow.nombre}</td>
                 <td>{itemRow.puntos}</td>
+                <td>{itemRow.ganancia}</td>
                 <td>{itemRow.entrenador.nombre}</td>
                 <td>
                     <Button onClick={event => data.detail(itemRow, event)} variant="info">Info</Button>{' '}
@@ -29,6 +30,7 @@ const TableJugadores = (props) => {
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Puntos</th>
+                    <th>Ganancia</th>
                     <th>Entrenador</th>
                     <th>Acciones</th>
                 </tr>

@@ -1,5 +1,6 @@
 package com.baufest.tennis.springtennis.service;
 
+import com.baufest.tennis.springtennis.dto.JugadorConGanancia;
 import com.baufest.tennis.springtennis.dto.JugadorDTO;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface JugadorService {
 	 *
 	 * @return List<JugadorDto>
 	 */
-	List<JugadorDTO> listAll();
+	List<JugadorConGanancia> listAll();
 
 	/**
 	 * <p>

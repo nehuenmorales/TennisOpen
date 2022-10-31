@@ -1,5 +1,6 @@
 package com.baufest.tennis.springtennis.service;
 
+import com.baufest.tennis.springtennis.dto.JugadorConGanancia;
 import com.baufest.tennis.springtennis.dto.JugadorDTO;
 import com.baufest.tennis.springtennis.enums.Estado;
 import com.baufest.tennis.springtennis.mapper.JugadorMapper;
@@ -50,15 +51,66 @@ public class JugadorServiceImpl implements JugadorService {
 
 
     @Override
-    public List<JugadorDTO> listAll() {
-        /*
-         * Se obtiene una collection de jugadores (entidad) del repository,
-         * se transforma a una collection de jugadores (DTO) y luego
-         * se lo transforma en un ArrayList para devolverlo al controller*/
-        return jugadorRepository.findAllByOrderByNombreAsc().stream()
+    public List<JugadorConGanancia> listAll() {
+
+        List<Partido> partidos = partidoRepository.findAll();
+        List<JugadorDTO> jugadores = jugadorRepository.findAllByOrderByNombreAsc().stream()
                 .map(this.jugadorMapper::toDTO)
                 .collect(Collectors.toList());
+
+        List<JugadorConGanancia> jugadoresConGanancia = new ArrayList<>();
+
+       for (JugadorDTO J : jugadores) {
+            List<Partido> trescientos = listPartidosGanadosMasTresGames(J.getId(), partidos);
+            List<Partido> doscientos = listPartidosGanadosMasTresGames(J.getId(), partidos);
+            int ganancia = trescientos.size() * 300 + doscientos.size() * 200;
+
+            JugadorConGanancia jugadorConGanancia = new JugadorConGanancia();
+            jugadorConGanancia.setGanancia(ganancia);
+            jugadorConGanancia.setId(J.getId());
+            jugadorConGanancia.setNombre(J.getNombre());
+            jugadorConGanancia.setEntrenador(J.getEntrenador());
+            jugadorConGanancia.setNombre(J.getNombre());
+
+           jugadoresConGanancia.add(jugadorConGanancia);
+        }
+
+
+        return jugadoresConGanancia;
+
     }
+
+
+    private List<Partido> listPartidosGanadosMasTresGames(Long id, List<Partido> partidos) {
+        List<Partido> partidosFiltrados = new ArrayList<>();
+        for(Partido p : partidos){
+            if(p.getEstado() == Estado.FINALIZADO && p.getJugadorLocal().getId().equals(id) && p.getCantidadGamesLocal() == 6)
+                if(p.getCantidadGamesLocal() - p.getCantidadGamesVisitante() >= 3 ){
+                    partidosFiltrados.add(p);
+                }
+            if(p.getEstado() == Estado.FINALIZADO && p.getJugadorVisitante().getId().equals(id) && p.getCantidadGamesVisitante() == 6)
+                if(p.getCantidadGamesVisitante() - p.getCantidadGamesLocal() >= 3 ){
+                    partidosFiltrados.add(p);
+                }
+        }
+        return partidosFiltrados;
+    }
+
+    private List<Partido> listPartidosGanadosMenosTresGames(Long id, List<Partido> partidos) {
+        List<Partido> partidosFiltrados = new ArrayList<>();
+        for(Partido p : partidos){
+            if(p.getEstado() == Estado.FINALIZADO && p.getJugadorLocal().getId().equals(id) && p.getCantidadGamesLocal() == 6)
+                if(p.getCantidadGamesLocal() - p.getCantidadGamesVisitante() < 3 ){
+                    partidosFiltrados.add(p);
+                }
+            if(p.getEstado() == Estado.FINALIZADO && p.getJugadorVisitante().getId().equals(id) && p.getCantidadGamesVisitante() == 6)
+                if(p.getCantidadGamesVisitante() - p.getCantidadGamesLocal() < 3 ){
+                    partidosFiltrados.add(p);
+                }
+        }
+        return partidosFiltrados;
+    }
+
 
     @Override
     public JugadorDTO getById(Long id) {

@@ -5,13 +5,13 @@ const generateHeaderTable = (columns) => (<tr>{columns.map((head, index) => <th 
 
 const generateContentTable = (data) => {
     return data.map((item, index) => {
-       return <tr key={`tr-${index}`}>{ generateCell(item) }</tr>;
+        return <tr key={`tr-${index}`}>{generateCell(item)}</tr>;
     });
 }
 
 const generateCell = (data) => {
     return Object.keys(data).map((key, index) => {
-        return <td key={`td-${index}`}>{ data[key] }</td>
+        return <td key={`td-${index}`}>{data[key]}</td>
     })
 }
 
@@ -25,7 +25,7 @@ const Tables = (props) => {
                 {generateHeaderTable(tableHead)}
             </thead>
             <tbody>
-                { generateContentTable(tableBody) }
+                {generateContentTable(tableBody)}
             </tbody>
         </Table>
     )

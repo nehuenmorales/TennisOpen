@@ -14,7 +14,9 @@ public class JugadorMapperImpl implements JugadorMapper {
     }
     /* Utilizamos el Mapper para no acceder directamente a la base.
     Lo implementamos en el JugadorServiceImpl a traves del @Autowired
+
      */
+
 
     /* Esta funcion recibe como parametro un Jugador
      * y en base a el parametro recibido genera una nueva instancia

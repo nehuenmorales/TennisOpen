@@ -1,5 +1,6 @@
 package com.baufest.tennis.springtennis.controller;
 
+import com.baufest.tennis.springtennis.dto.JugadorConGanancia;
 import com.baufest.tennis.springtennis.dto.JugadorDTO;
 import com.baufest.tennis.springtennis.service.JugadorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class JugadorController {
      * un ResponseEntity que contiene una lista de jugadores, en cual se construye al momento del retorno del service
      * por medio del ResponseEntity.ok() con un HttpStatus.Ok (200)*/
     @GetMapping
-    public ResponseEntity<List<JugadorDTO>> listAll() {
+    public ResponseEntity<List<JugadorConGanancia>> listAll() {
         return ResponseEntity.ok(jugadorService.listAll());
     }
 
