@@ -38,6 +38,11 @@ public class Jugador{
 	@Column(nullable = false)
 	private int puntos;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idEntrenador", nullable = true)
+	private Entrenador entrenador;
+
+
 	/* Construtores de nuestro modelo de dato */
 
 	/* Los constructores se utilizan al momento de instanciar nuesta clase y darle espacio en memoria,
@@ -51,10 +56,23 @@ public class Jugador{
 		this.puntos = puntos;
 	}
 
+	public Jugador(String nombre, int puntos, Entrenador entrenador) {
+		this.nombre = nombre;
+		this.puntos = puntos;
+		this.entrenador = entrenador;
+	}
+
 	public Jugador(Long id, String nombre, int puntos) { //Aca un constructor con tres parametros instanciados
 		this.id = id;
 		this.nombre = nombre;
 		this.puntos = puntos;
+	}
+
+	public Jugador(Long id, String nombre, int puntos, Entrenador entrenador) {
+		this.id = id;
+		this.nombre = nombre;
+		this.puntos = puntos;
+		this.entrenador = entrenador;
 	}
 
 	/* Getters & Setters */
@@ -65,6 +83,14 @@ public class Jugador{
 	si queremos que un atributo no sea accesible para cambio ni obtenerlo simplemente borramos el getter
 	y el setter, de forma natural no habria forma de acceder a dicho atributo fuera de la instanciacion
 	 */
+
+	public Entrenador getEntrenador() {
+		return entrenador;
+	}
+
+	public void setEntrenador(Entrenador entrenador) {
+		this.entrenador = entrenador;
+	}
 
 	public Long getId() {
 		return id;

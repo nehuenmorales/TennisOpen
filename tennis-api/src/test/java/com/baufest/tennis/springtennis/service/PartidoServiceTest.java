@@ -5,10 +5,7 @@ import com.baufest.tennis.springtennis.dto.JugadorDTO;
 import com.baufest.tennis.springtennis.dto.PartidoDTO;
 import com.baufest.tennis.springtennis.enums.Estado;
 import com.baufest.tennis.springtennis.enums.ModoJugador;
-import com.baufest.tennis.springtennis.mapper.CanchaMapperImpl;
-import com.baufest.tennis.springtennis.mapper.JugadorMapperImpl;
-import com.baufest.tennis.springtennis.mapper.PartidoMapper;
-import com.baufest.tennis.springtennis.mapper.PartidoMapperImpl;
+import com.baufest.tennis.springtennis.mapper.*;
 import com.baufest.tennis.springtennis.model.Cancha;
 import com.baufest.tennis.springtennis.model.Jugador;
 import com.baufest.tennis.springtennis.model.Partido;
@@ -55,12 +52,13 @@ class PartidoServiceTest {
 
     PartidoDTO partidoDTOParaAgregar = new PartidoDTO(1L, new Date(2543447456000L), Estado.NO_INICIADO, jugadorDTO1, jugadorDTO2, 0, 0, 0, 0, canchaDTO1);
 
+    EntrenadorMapper entrenadorMapper;
     @Mock()
     PartidoRepository partidoRepository;
 
     PartidoServiceImpl partidoService;
 
-    PartidoMapper mapper = new PartidoMapperImpl(new CanchaMapperImpl(),new JugadorMapperImpl());
+    PartidoMapper mapper = new PartidoMapperImpl(new CanchaMapperImpl(),new JugadorMapperImpl(entrenadorMapper));
 
     @BeforeEach
     public void setUp() {

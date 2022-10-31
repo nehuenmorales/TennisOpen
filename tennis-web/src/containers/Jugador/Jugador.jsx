@@ -8,6 +8,10 @@ import httpClient from '../../lib/httpClient';
 let jugadorInit = {
   nombre: '',
   puntos: 0,
+  entrenador: {
+    id: -1,
+    nombre: '',
+  }
 };
 
 const Jugador = (props) => {
@@ -17,9 +21,11 @@ const Jugador = (props) => {
   const [hasErrorInForm, setHasErrorInForm] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [listaEntrenadores, setListaEntrenadores] = useState([]);
 
   useEffect(async () => {
     await getJugadores();
+    await getEntrenadores();
   }, []);
 
   //Verbos
@@ -32,9 +38,19 @@ const Jugador = (props) => {
     }
   };
 
+  const getEntrenadores = async () => {
+    try {
+      const data = await httpClient.get('/entrenador');
+      setListaEntrenadores(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const agregarJugador = async () => {
     try {
-      const data = await httpClient.post(`/jugadores`, { data: jugadorData });
+      const dataSend = { ...jugadorData };
+      const data = await httpClient.post(`/jugadores`, { data: dataSend });
       setJugadoresList([...jugadoresList, data]);
     } catch (error) {
       console.log(error);
@@ -105,16 +121,41 @@ const Jugador = (props) => {
   };
 
   // Form
+
   const handleChangeInputForm = (property, value) => {
-    // Si el valor del input es vacío, entonces setea que hay un error
     value === '' ? setHasErrorInForm(true) : setHasErrorInForm(false);
 
-    setJugadorData({ ...jugadorData, [property]: value });
+    const newData = { ...jugadorData };
+
+    switch (property) {
+      case 'entrenador':
+        newData.entrenador = listaEntrenadores.filter((x) => x.id === parseInt(value))[0];
+        break;
+      case 'nombre':
+        newData.nombre = value
+        break;
+      case 'puntos':
+        newData.puntos = value;
+        break;
+      default:
+        break;
+    }
+
+    setJugadorData(newData);
   };
+
+  // const handleChangeInputForm = (property, value) => {
+  //   // Si el valor del input es vacío, entonces setea que hay un error
+  //   value === '' ? setHasErrorInForm(true) : setHasErrorInForm(false);
+
+  //   setJugadorData({ ...jugadorData, [property]: value });
+  // };
 
   const handleSubmitForm = (e, form, isEdit) => {
     e.preventDefault();
     setHasErrorInForm(true);
+
+    console.log("is edit", isEdit);
 
     if (form.checkValidity()) isEdit ? editarJugador(jugadorData.id) : agregarJugador();
   };
@@ -144,6 +185,7 @@ const Jugador = (props) => {
         validated={hasErrorInForm}
         handleSubmit={handleSubmitForm}
         errorMsg={errorMsg}
+        listaEntrenadores={listaEntrenadores}
       />
     </>
   );

@@ -10,6 +10,7 @@ import JugarPartido from '../containers/JugarPartido/JugarPartido';
 import Cancha from '../containers/Cancha/Cancha';
 import About from '../containers/About/About';
 import NotFound from '../containers/NotFound/NotFound';
+import Entrenador from '../containers/Entrenador/Entrenador';
 
 class App extends React.Component {
   render() {
@@ -24,6 +25,7 @@ class App extends React.Component {
               <Route exact path="/partido" component={Partido} />
               <Route exact path="/partido/jugar-partido" component={JugarPartido} />
               <Route exact path="/cancha" component={Cancha} />
+              <Route exact path="/entrenador" component={Entrenador} />
               <Route exact path="/about" component={About} />
               <Route component={NotFound} />
             </Switch>
