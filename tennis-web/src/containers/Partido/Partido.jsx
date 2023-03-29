@@ -52,7 +52,7 @@ const Partido = () => {
     try {
       const data = await httpClient.get('/partidos');
       data.map((partido) => {
-        partido.fechaComienzo = new Date (partido.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
+        partido.fechaComienzo = new Date(partido.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
         return partido;
       });
       setPartidosList(data);
@@ -81,10 +81,10 @@ const Partido = () => {
 
   const agregarPartido = async () => {
     try {
-      const dataSend = {... partidoData};
+      const dataSend = { ...partidoData };
       dataSend.fechaComienzo = stringToDate(dataSend.fechaComienzo);
       const data = await httpClient.post('/partidos', { data: dataSend });
-      data.fechaComienzo = new Date (data.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
+      data.fechaComienzo = new Date(data.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
       setPartidosList([...partidosList, data]);
     } catch (error) {
       console.log(error);
@@ -94,10 +94,10 @@ const Partido = () => {
 
   const editarPartido = async (id) => {
     try {
-      const dataSend = {...partidoData};
+      const dataSend = { ...partidoData };
       dataSend.fechaComienzo = stringToDate(dataSend.fechaComienzo);
       const data = await httpClient.put(`/partidos/${id}`, { data: dataSend });
-      data.fechaComienzo = new Date (data.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
+      data.fechaComienzo = new Date(data.fechaComienzo).toLocaleDateString('es-AR', dateOptions);
       setPartidosList(partidosList.map((item) => (item.id === id ? data : item)));
     } catch (error) {
       console.log(error);
@@ -114,13 +114,13 @@ const Partido = () => {
     }
   };
 
-  const iniciarPartido = async(id) => {
+  const iniciarPartido = async (id) => {
     const partido = partidosList.filter(element => element.id === id);
-    if(partido[0].estado === 'NO_INICIADO'){
-      try{
+    if (partido[0].estado === 'NO_INICIADO') {
+      try {
         await httpClient.put(`/partidos/${id}/actions/init`);
       }
-      catch(error){
+      catch (error) {
         console.log(error);
       }
     }
@@ -181,7 +181,7 @@ const Partido = () => {
     if (isEdit) {
       partidosPorCancha = partidosPorCancha.filter((item) => item.id !== partidoData.id);
     }
-    return  partidosPorCancha.filter((item) => new Date(stringToDate(item.fechaComienzo)) > fechaAntes && new Date(stringToDate(item.fechaComienzo)) < fechaDespues);
+    return partidosPorCancha.filter((item) => new Date(stringToDate(item.fechaComienzo)) > fechaAntes && new Date(stringToDate(item.fechaComienzo)) < fechaDespues);
   };
 
   // Buttons
@@ -253,16 +253,16 @@ const Partido = () => {
 
   return (
     <>
-      <Typography id={'title-id'}>Partido</Typography>
-      <div className='mb-2'>
-        <Button variant='success' onClick={() => handleOpenModal()}>Agregar partido</Button>
-      </div>
+      <Typography id={'title-id'} class="text-center" >Todos los partidos</Typography>
       <TablePartido
         dataForTable={partidosList}
         editPartido={handleEditPartido}
         deletePartido={(id, event) => handleDeletePartido(id, event)}
         iniciarPartido={iniciarPartido}
       />
+      <div className='mb-2' class="btn float-right" >
+        <Button variant='success' onClick={() => handleOpenModal()}>Agregar partido</Button>
+      </div>
       <PartidoModal
         show={openModal}
         onHide={handleCloseModal}

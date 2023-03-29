@@ -73,12 +73,12 @@ const Cancha = (props) => {
   };
 
   const calcularPartidosEnElDia = (canchaId) => {
-    const partidos = [... partidosList];
+    const partidos = [...partidosList];
     let partidosHoyEnCancha = 0;
-    const hoy = new Date(Date.now()).setHours(0, 0, 0 ,0);
+    const hoy = new Date(Date.now()).setHours(0, 0, 0, 0);
     partidos.map(partido => partido.fechaComienzo = new Date(partido.fechaComienzo).setHours(0, 0, 0, 0));
     partidos.forEach(element => {
-      if(element.fechaComienzo === hoy && element.cancha.id === canchaId){
+      if (element.fechaComienzo === hoy && element.cancha.id === canchaId) {
         partidosHoyEnCancha++;
       }
     });
@@ -137,11 +137,6 @@ const Cancha = (props) => {
   return (
     <>
       <Typography id={'title-id'}>Cancha</Typography>
-      <div className="mb-2">
-        <Button variant="success" onClick={() => handleOpenModal()}>
-          Agregar cancha
-        </Button>
-      </div>
 
       <TableCancha
         dataForTable={canchasList}
@@ -149,6 +144,11 @@ const Cancha = (props) => {
         delete={(id, event) => handleDelete(id, event)}
         calcularPartidosEnElDia={calcularPartidosEnElDia}
       />
+      <div className="mb-2" class="btn float-right">
+        <Button variant="success" onClick={() => handleOpenModal()}>
+          Agregar cancha
+        </Button>
+      </div>
       <CanchaModal
         show={openModal}
         onHide={handleCloseModal}

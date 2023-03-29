@@ -124,15 +124,15 @@ const Entrenador = (props) => {
     return (
         <>
             <Typography id={'title-id'}>Entrenador</Typography>
-            <div className="mb-2">
-                <Button variant="success" onClick={() => handleOpenModal()}>Agregar entrenador</Button>
-            </div>
 
             <TableEntrenadores
                 dataForTable={entrenadoresList}
                 edit={handleEdit}
                 delete={(id, event) => handleDelete(id, event)}
             />
+            <div className="mb-2" class="btn float-right">
+                <Button variant="success" onClick={() => handleOpenModal()}>Agregar entrenador</Button>
+            </div>
             <EntrenadorModal
                 show={openModal}
                 onHide={handleCloseModal}

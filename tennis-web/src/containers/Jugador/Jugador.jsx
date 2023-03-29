@@ -165,9 +165,6 @@ const Jugador = (props) => {
   return (
     <>
       <Typography id={'title-id'}>Jugador</Typography>
-      <div className="mb-2">
-        <Button variant="success" onClick={() => handleOpenModal()}>Agregar jugador</Button>
-      </div>
 
       <TableJugadores
         dataForTable={jugadoresList}
@@ -176,6 +173,9 @@ const Jugador = (props) => {
         delete={(id, event) => handleDelete(id, event)}
         recalcularRanking={handleRecalculateRanking}
       />
+      <div className="mb-2" class="btn float-right">
+        <Button variant="success" onClick={() => handleOpenModal()}>Agregar jugador</Button>
+      </div>
       <JugadorModal
         show={openModal}
         onHide={handleCloseModal}
