@@ -4,6 +4,8 @@ import TablePartido from '../../components/Tables/TablePartido';
 import PartidoModal from '../../components/Modals/PartidoModal';
 import { Button } from 'react-bootstrap';
 import httpClient from '../../lib/httpClient';
+import TennisLoader from '../../components/Spiner/TennisSpiner';
+import '../Style/Style.css'
 
 const partidoInit = {
   fechaComienzo: '',
@@ -37,11 +39,17 @@ const Partido = () => {
   const [hasErrorInForm, setHasErrorInForm] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(async () => {
+    setLoading(true);
+
     await getPartidos();
     await getJugadores();
     await getCanchas();
+    setLoading(false);
+
   }, []);
 
   // Functions
@@ -253,29 +261,40 @@ const Partido = () => {
 
   return (
     <>
-      <Typography id={'title-id'} class="text-center" >Todos los partidos</Typography>
-      <TablePartido
-        dataForTable={partidosList}
-        editPartido={handleEditPartido}
-        deletePartido={(id, event) => handleDeletePartido(id, event)}
-        iniciarPartido={iniciarPartido}
-      />
-      <div className='mb-2' class="btn float-right" >
-        <Button variant='success' onClick={() => handleOpenModal()}>Agregar partido</Button>
-      </div>
-      <PartidoModal
-        show={openModal}
-        onHide={handleCloseModal}
-        isEdit={isEdit}
-        handleChange={handleChangeInputForm}
-        validated={hasErrorInForm}
-        handleSubmit={handleSubmitForm}
-        errorMsg={errorMsg}
-        partido={partidoData}
-        listaJugadores={listaJugadores}
-        listaCanchas={listaCanchas}
-      />
+      {
+        loading ? (
+          <div className='loaderContainer' >
+            <TennisLoader />
+          </div>
+        ) : (
+          < div class='container-lg text-center'>
+            <Typography id={'title-id'} class="text-center" >Todos los partidos</Typography>
+            <TablePartido
+              dataForTable={partidosList}
+              editPartido={handleEditPartido}
+              deletePartido={(id, event) => handleDeletePartido(id, event)}
+              iniciarPartido={iniciarPartido}
+            />
+            <div className='mb-2' class="btn float-right" >
+              <Button variant='success' onClick={() => handleOpenModal()}>Agregar partido</Button>
+            </div>
+            <PartidoModal
+              show={openModal}
+              onHide={handleCloseModal}
+              isEdit={isEdit}
+              handleChange={handleChangeInputForm}
+              validated={hasErrorInForm}
+              handleSubmit={handleSubmitForm}
+              errorMsg={errorMsg}
+              partido={partidoData}
+              listaJugadores={listaJugadores}
+              listaCanchas={listaCanchas}
+            />
+          </div >
+        )
+      }
     </>
+
   );
 };
 

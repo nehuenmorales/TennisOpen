@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 import TableCancha from '../../components/Tables/TableCancha';
 import CanchaModal from '../../components/Modals/CanchaModal';
 import httpClient from '../../lib/httpClient';
+import TennisLoader from '../../components/Spiner/TennisSpiner';
+import '../Style/Style.css'
 
 let canchaInit = {
   nombre: '',
@@ -18,10 +20,15 @@ const Cancha = (props) => {
   const [hasErrorInForm, setHasErrorInForm] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [loading, setLoading] = useState(false);
+
+
 
   useEffect(async () => {
+    setLoading(true);
     await getCanchas();
     await getPartidos();
+    setLoading(false);
   }, []);
 
   //Verbos
@@ -136,29 +143,41 @@ const Cancha = (props) => {
 
   return (
     <>
-      <Typography id={'title-id'}>Cancha</Typography>
+      {
+        loading ? (
+          <div className='loaderContainer' >
+            <TennisLoader />
+          </div>) : (
+          <div className='contenedores'>
 
-      <TableCancha
-        dataForTable={canchasList}
-        edit={handleEdit}
-        delete={(id, event) => handleDelete(id, event)}
-        calcularPartidosEnElDia={calcularPartidosEnElDia}
-      />
-      <div className="mb-2" class="btn float-right">
-        <Button variant="success" onClick={() => handleOpenModal()}>
-          Agregar cancha
-        </Button>
-      </div>
-      <CanchaModal
-        show={openModal}
-        onHide={handleCloseModal}
-        isEdit={isEdit}
-        handleChange={handleChangeInputForm}
-        cancha={canchaData}
-        validated={hasErrorInForm}
-        handleSubmit={handleSubmitForm}
-        errorMsg={errorMsg}
-      />
+            <div class='container-lg text-center'>
+              <Typography id={'title-id'}>Cancha</Typography>
+
+              <TableCancha
+                dataForTable={canchasList}
+                edit={handleEdit}
+                delete={(id, event) => handleDelete(id, event)}
+                calcularPartidosEnElDia={calcularPartidosEnElDia}
+              />
+              <div className="mb-2" class="btn float-right">
+                <Button variant="success" onClick={() => handleOpenModal()}>
+                  Agregar cancha
+                </Button>
+              </div>
+              <CanchaModal
+                show={openModal}
+                onHide={handleCloseModal}
+                isEdit={isEdit}
+                handleChange={handleChangeInputForm}
+                cancha={canchaData}
+                validated={hasErrorInForm}
+                handleSubmit={handleSubmitForm}
+                errorMsg={errorMsg}
+              />
+            </div>
+          </div>
+        )
+      }
     </>
   );
 };

@@ -4,6 +4,10 @@ import { Button } from 'react-bootstrap';
 import TableEntrenadores from '../../components/Tables/TableEntrenadores';
 import EntrenadorModal from '../../components/Modals/EntrenadorModal';
 import httpClient from '../../lib/httpClient';
+import TennisLoader from '../../components/Spiner/TennisSpiner';
+
+import '../Style/Style.css'
+
 
 let entrenadorInit = {
     nombre: '',
@@ -17,9 +21,13 @@ const Entrenador = (props) => {
     const [hasErrorInForm, setHasErrorInForm] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
+    const [loading, setLoading] = useState(false);
+
 
     useEffect(async () => {
+        setLoading(true);
         await getEntrenadores();
+        setLoading(false);
     }, []);
 
     //Verbos
@@ -123,26 +131,34 @@ const Entrenador = (props) => {
 
     return (
         <>
-            <Typography id={'title-id'}>Entrenador</Typography>
+            {loading ? (
+                <div className='loaderContainer' >
+                    <TennisLoader />
+                </div>) : (
 
-            <TableEntrenadores
-                dataForTable={entrenadoresList}
-                edit={handleEdit}
-                delete={(id, event) => handleDelete(id, event)}
-            />
-            <div className="mb-2" class="btn float-right">
-                <Button variant="success" onClick={() => handleOpenModal()}>Agregar entrenador</Button>
-            </div>
-            <EntrenadorModal
-                show={openModal}
-                onHide={handleCloseModal}
-                isEdit={isEdit}
-                handleChange={handleChangeInputForm}
-                entrenador={entrenadorData}
-                validated={hasErrorInForm}
-                handleSubmit={handleSubmitForm}
-                errorMsg={errorMsg}
-            />
+                <div class='container-lg text-center'>
+                    <Typography id={'title-id'}>Entrenador</Typography>
+
+                    <TableEntrenadores
+                        dataForTable={entrenadoresList}
+                        edit={handleEdit}
+                        delete={(id, event) => handleDelete(id, event)}
+                    />
+                    <div className="mb-2" class="btn float-right">
+                        <Button variant="success" onClick={() => handleOpenModal()}>Agregar entrenador</Button>
+                    </div>
+                    <EntrenadorModal
+                        show={openModal}
+                        onHide={handleCloseModal}
+                        isEdit={isEdit}
+                        handleChange={handleChangeInputForm}
+                        entrenador={entrenadorData}
+                        validated={hasErrorInForm}
+                        handleSubmit={handleSubmitForm}
+                        errorMsg={errorMsg}
+                    />
+                </div>)
+            }
         </>
     );
 };

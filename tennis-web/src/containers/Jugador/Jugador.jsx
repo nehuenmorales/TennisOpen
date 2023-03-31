@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 import TableJugadores from '../../components/Tables/TableJugadores';
 import JugadorModal from '../../components/Modals/JugadorModal';
 import httpClient from '../../lib/httpClient';
+import TennisLoader from '../../components/Spiner/TennisSpiner';
+import '../Style/Style.css'
 
 let jugadorInit = {
   nombre: '',
@@ -22,10 +24,16 @@ const Jugador = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [listaEntrenadores, setListaEntrenadores] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(async () => {
+    setLoading(true);
+
     await getJugadores();
     await getEntrenadores();
+    setLoading(false);
+
   }, []);
 
   //Verbos
@@ -164,30 +172,40 @@ const Jugador = (props) => {
 
   return (
     <>
-      <Typography id={'title-id'}>Jugador</Typography>
+      {loading ? (
+        <div className='loaderContainer' >
+          <TennisLoader />
+        </div>
+      ) : (
+        <div class='container-lg text-center'>
 
-      <TableJugadores
-        dataForTable={jugadoresList}
-        detail={handleDetail}
-        edit={handleEdit}
-        delete={(id, event) => handleDelete(id, event)}
-        recalcularRanking={handleRecalculateRanking}
-      />
-      <div className="mb-2" class="btn float-right">
-        <Button variant="success" onClick={() => handleOpenModal()}>Agregar jugador</Button>
-      </div>
-      <JugadorModal
-        show={openModal}
-        onHide={handleCloseModal}
-        isEdit={isEdit}
-        handleChange={handleChangeInputForm}
-        jugador={jugadorData}
-        validated={hasErrorInForm}
-        handleSubmit={handleSubmitForm}
-        errorMsg={errorMsg}
-        listaEntrenadores={listaEntrenadores}
-      />
+          <Typography id={'title-id'} >Jugador</Typography>
+
+          <TableJugadores
+            dataForTable={jugadoresList}
+            detail={handleDetail}
+            edit={handleEdit}
+            delete={(id, event) => handleDelete(id, event)}
+            recalcularRanking={handleRecalculateRanking}
+          />
+          <div className="mb-2" class="btn float-right">
+            <Button variant="success" onClick={() => handleOpenModal()}>Agregar jugador</Button>
+          </div>
+          <JugadorModal
+            show={openModal}
+            onHide={handleCloseModal}
+            isEdit={isEdit}
+            handleChange={handleChangeInputForm}
+            jugador={jugadorData}
+            validated={hasErrorInForm}
+            handleSubmit={handleSubmitForm}
+            errorMsg={errorMsg}
+            listaEntrenadores={listaEntrenadores}
+          />
+        </div>)
+      }
     </>
+
   );
 };
 

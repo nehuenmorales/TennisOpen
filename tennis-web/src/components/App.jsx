@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 
 import Wrapper from './Wrapper/Wrapper';
 
@@ -12,27 +13,28 @@ import About from '../containers/About/About';
 import NotFound from '../containers/NotFound/NotFound';
 import Entrenador from '../containers/Entrenador/Entrenador';
 
-class App extends React.Component {
-  render() {
-    return (
-      <>
-        <BrowserRouter>
-          <Wrapper>
-            <Switch>
-              <Route exact path="/" component={Partido} />
-              <Route exact path="/jugador" component={Jugador} />
-              <Route exact path="/jugador/detalle/:id" component={Detalle} />
-              <Route exact path="/partido/jugar-partido" component={JugarPartido} />
-              <Route exact path="/cancha" component={Cancha} />
-              <Route exact path="/entrenador" component={Entrenador} />
-              <Route exact path="/about" component={About} />
-              <Route component={NotFound} />
-            </Switch>
-          </Wrapper>
-        </BrowserRouter>
-      </>
-    );
-  }
+
+function App() {
+
+  return (
+    <>
+      <BrowserRouter>
+        <Wrapper class='container-fluid'>
+          <Switch>
+            <Route exact path="/" component={Partido} />
+            <Route exact path="/jugador" component={Jugador} />
+            <Route exact path="/jugador/detalle/:id" component={Detalle} />
+            <Route exact path="/partido/jugar-partido" component={JugarPartido} />
+            <Route exact path="/cancha" component={Cancha} />
+            <Route exact path="/entrenador" component={Entrenador} />
+            <Route exact path="/about" component={About} />
+            <Route component={NotFound} />
+          </Switch>
+        </Wrapper>
+      </BrowserRouter>
+    </>
+  );
+
 }
 
 export default App;

@@ -21,4 +21,4 @@ import App from './components/App';
 import './assets/css/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(<App class='container-fluid' />, document.getElementById('app'));
