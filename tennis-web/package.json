@@ -1,5 +1,5 @@
 {
-  "name": "bf-pei-react-java-baufest-tennis",
+  "name": "tennis-open",
   "version": "1.0.0",
   "description": "PEI - Baufest Tennis",
   "main": "index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rudemex/bf-pei-react-java-baufest-tennis.git"
+    "url": "https://github.com/nehuenmorales/TennisOpen"
   },
   "keywords": [
-    "Baufest",
-    "PEI",
-    "React"
+    "Tennnis",
+    "Puntos",
+    "Games"
   ],
-  "author": "Maximiliano \"Mex\" Delgado<mdelgado@baufest.com>",
+  "author": "Nehuen Morales",
   "license": "MIT",
   "prettier": {
     "semi": true,
