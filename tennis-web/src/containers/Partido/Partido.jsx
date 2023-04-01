@@ -267,7 +267,7 @@ const Partido = () => {
             <TennisLoader />
           </div>
         ) : (
-          < div class='container-lg text-center'>
+          <div class='container-lg text-center'>
             <Typography id={'title-id'} class="text-center" >Todos los partidos</Typography>
             <TablePartido
               dataForTable={partidosList}
